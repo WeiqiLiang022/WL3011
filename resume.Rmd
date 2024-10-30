@@ -1,0 +1,28 @@
+
+---
+title: "Resume"
+
+output: html_document
+---
+
+You can download my resume [here](./resume.pdf).
+
+<style>
+  .pdf-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+    margin: 0;
+    padding: 0;
+  }
+  iframe {
+    border: none;
+    width: 60vw;
+    height: 95vh; 
+  }
+</style>
+
+<div class="pdf-container">
+  <iframe src="./resume.pdf"></iframe>
+</div>

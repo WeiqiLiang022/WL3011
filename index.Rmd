@@ -1,0 +1,53 @@
+---
+title: "Weiqi Liang"
+
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    theme: cosmo
+---
+<style>
+   .text-section {
+    max-width: 900px; 
+  }
+  
+  .profile-photo {
+    width:30%; 
+    float:right; 
+    margin-left: 30px; 
+    border-radius: 10px;
+  }
+  
+  h2 {
+    color: #1e5ba6; 
+  }
+</style>
+
+<img src="./lwq.jpg" alt="Profile Photo" class="profile-photo">
+ 
+<div class="text-section">
+  
+## Welcome to my personal website!
+    
+I am Weiqi Liang, passionate about data science. Here you can find my resume and connect with me on [email](mailto:wl3011@cumc.columbia.edu) and [GitHub](https://github.com/WeiqiLiang022).
+
+### Education
+
+**Columbia University – Mailman School of Public Health**  
+Master of Science, Biostatistics  
+Expected on May. 2026  
+    
+**Beijing Normal University**  
+Bachelor of Science, Mathematics and Applied Mathematics  
+Jun. 2024
+
+### Study Interest
+Longitudinal and Multilevel Data, Survival Analysis, Casual inference
+
+### Publications
+**Liang W**, Wang H, Xue H, Chen Y, Zhong Y. Spatiotemporal characteristics and co-effects of air quality and carbon dioxide emissions changes during the COVID-19 epidemic lockdown measures in China. *J Clean Prod*. 2023 Aug 15; 414:137755. [doi: 10.1016/j.jclepro.2023.137755](https://www.sciencedirect.com/science/article/pii/S0959652623019133)
+</div>
+ 
+
+
