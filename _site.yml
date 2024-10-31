@@ -13,4 +13,4 @@ navbar:
       href: https://github.com/WeiqiLiang022
 output:
   html_document:
-    theme: cosmo
+    theme: flatly
