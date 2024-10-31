@@ -10,10 +10,9 @@ library(flexdashboard)
 library(tidyverse)
 library(plotly)
 library(p8105.datasets)
-library(ggplot2)
 ```
 
-```{r message = FALSE, message = FALSE, warning=FALSE}
+```{r echo = FALSE, message = FALSE, message = FALSE, warning=FALSE}
 
 # basic dataset: ny_noaa
 ny_noaa = ny_noaa |>
@@ -32,42 +31,60 @@ ny_noaa = ny_noaa |>
   )
 ```
 
-Column {data-width=650}
+Column {data-width=500}
 -----------------------------------------------------------------------
-```{r message = FALSE, warning=FALSE, fig.width = 7, fig.height = 7, fig.cap="Figure 1. Annual Snowfall Values Distribution"}
-library(ggridges)
-
-p2 = ny_noaa |>
-  filter(snow > 0 & snow < 100) |>
-  ggplot(aes(x = snow, y = year, fill = factor(year))) +
-  geom_density_ridges(scale = 1.5, rel_min_height = 0.01) +  
-  labs(
-    x = "Snowfall (mm)",
-    y = "Year",
-    fill = "Year"
-  ) +
-  scale_y_continuous(
-    breaks = seq(1980, 2010, by = 5) 
-  ) + 
-  theme_minimal() +
-  theme(legend.position = "none")
-
-print(p2)
-```
-
-```{r message = FALSE, warning = FALSE}
+### Max Temperture vs. Min Temperture by Year and Station
+```{r echo = FALSE, message = FALSE, warning = FALSE}
 # scatter plot of tmax vs tmin by year and id
 ny_noaa |>
   group_by(id, year) |>
   summarise(avg_tmax = mean(tmax, na.rm = TRUE),
             avg_tmin = mean(tmin, na.rm = TRUE)) |>
-  slice(-1, -n()) |>
   mutate(text_label = paste("Station: ", id, "<br>Year: ", year, "<br>Max Temperture: ", avg_tmax, "<br>Min Temperture: ", avg_tmin)) |>
   plot_ly(
     x = ~avg_tmin, y = ~avg_tmax, type = "scatter", mode = "markers",
     color = ~avg_tmax, text = ~text_label, colors = "viridis", alpha = 0.5) |>
-   layout(title = "Max Temperture vs. Min Temperture by Year and Station",
-         xaxis = list(title = "Min Temperture"),
+   layout(
+     xaxis = list(title = "Min Temperture"),
          yaxis = list(title = "Max Temperture")) |>
    colorbar(title = "Temperture")
 ```
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Annual Minimum Temperature Distribution (Sampled)
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+# box plot
+ny_noaa |>
+  filter(!is.na(tmin)) |>
+  group_by(year) |>
+  sample_n(50) |>
+  ungroup() |>
+plot_ly(x = ~factor(year), y = ~tmin, type = "box",
+        color = ~factor(year), colors = "Pastel1") |>
+  layout(
+    xaxis = list(title = "Year", tickvals = seq(1980, 2010, by = 5)),
+    yaxis = list(title = "tmin")
+  )
+```
+
+### Frequency of Zero and Non-Zero Snowfall(mm) by Month
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+snowfall_df <- ny_noaa |>
+  filter(!is.na(snow)) |>
+  mutate(snowfall_category = ifelse(snow == 0, "Zero", "Non-Zero")) |>
+  count(month, snowfall_category)
+
+# bar plot
+plot_ly(snowfall_df, x = ~month, y = ~n, color = ~snowfall_category, colors = c("skyblue", "orange"),
+        type = "bar") |>
+  layout(
+    barmode = "dodge",
+    xaxis = list(title = "Month", tickvals = 1:12),  
+    yaxis = list(title = "Frequency"),
+    legend = list(title = list(text = "Snowfall (mm)"))
+  )
+```
+
+
